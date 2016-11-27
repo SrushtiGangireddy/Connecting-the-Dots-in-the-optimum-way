@@ -2,17 +2,17 @@
 
 Given the grid in the format
 
-+-------+
-| |X| | |
-|-|-|-|-|
-| | | | |
-|-|-|-|-|
-| | |X| |
-|-|-|-|-|
-| | | | |
-|-|-|-|-|
-|X| | | |
-+-------+
++-------+ \n
+| |X| | | \n
+|-|-|-|-| \n
+| | | | | \n
+|-|-|-|-| \n
+| | |X| | \n
+|-|-|-|-| \n
+| | | | | \n
+|-|-|-|-| \n
+|X| | | | \n
++-------+ \n
 
 The optimum number of cells required to connect all the 'X' is printed.
 
