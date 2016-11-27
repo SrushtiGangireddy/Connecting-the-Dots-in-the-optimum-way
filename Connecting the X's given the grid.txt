@@ -1,0 +1,174 @@
+import java.io.*;
+import java.util.*;
+import java.math.*;
+
+public class Solution{
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        ArrayList<String> lines=new ArrayList<String>();
+        while(sc.hasNext()){
+            String temp=sc.nextLine();
+            lines.add(temp);
+        }
+        int row_len=lines.size();
+        int col_len=lines.get(0).length();
+        String realgrid[][]=new String[row_len][col_len];
+        for(int i=0;i<row_len;i++){
+            for(int j=0;j<col_len;j++){
+                String cell=(String)lines.get(i);
+                realgrid[i][j]=Character.toString(cell.charAt(j));
+            }
+        }
+        
+        ArrayList<Integer> conn=new ArrayList<Integer>();
+        int connection=0;
+        for(int p=0;p<row_len;p++){
+            for(int q=0;q<col_len;q++){
+                if(realgrid[p][q].equals("X")){
+                    int temp_p=p;
+                    int temp_q=q;
+                    for(int p2=temp_p+1;p2<row_len;p2++){
+                        for(int q2=0;q2<col_len;q2++){
+                            if(realgrid[p2][q2].equals("X")){
+                                // p=p2-1;
+                                // q=q2-1;
+                                connection+=findOptimumConnectingLength(temp_p,temp_q,p2,q2,realgrid);
+                            }
+                           
+                        }
+                    }
+                }
+            }
+        }
+        
+        System.out.println(connection);
+    }
+    
+    public static int findOptimumConnectingLength(int p,int q,int p2,int q2,String realgrid[][]){
+        ArrayList<Integer> options=new ArrayList<Integer>();
+        if(q == q2){
+            options.add(straightDown(p,q,p2,q2,realgrid));
+        }else if(q<q2){
+            options.add(rightDownLeft(p,q,p2,q2,realgrid));
+            options.add(downRight(p,q,p2,q2,realgrid));
+        }else if(q>q2){
+            options.add(leftDownRight(p,q,p2,q2,realgrid));
+            options.add(downLeft(p,q,p2,q2,realgrid));
+        }
+        
+        Collections.sort(options);
+        int min=options.get(0);
+        return min;
+        
+    }
+    public static int straightDown(int p,int q,int p2,int q2,String realgrid[][]){
+        int count=0;
+        for(int x=p;x<=p2;x++){
+            for(int y=q;y<=q2;y++){
+                if(realgrid[x][y].equals(" ")){
+                    realgrid[x][y]="o";
+                    count++;
+                }
+                    
+            }
+        }
+       
+        return count;
+    }
+    public static int rightDownLeft(int p,int q,int p2,int q2,String realgrid[][]){
+        int count=0;
+        for(int x=p;x<=p;x++){
+            for(int y=q;y<=q2;y++){
+                if(realgrid[x][y].equals(" ")){
+                    realgrid[x][y]="o";
+                    count++;
+                }
+            }
+        }
+      
+        for(int x=p+1;x<=p2;x++){
+            for(int y=q2;y<=q2;y++){
+                if(realgrid[x][y].equals(" ")){
+                    realgrid[x][y]="o";
+                    count++;
+                }
+            }
+        }
+       
+       return count;
+    }
+    
+    public static int leftDownRight(int p,int q,int p2,int q2,String[][] realgrid){
+        int count=0;
+        
+        for(int x=p;x<=p;x++){
+            for(int y=q;y>=q2;y--){
+                if(realgrid[x][y].equals(" ")){
+                    realgrid[x][y]="o";
+                    count++;
+                }
+            }
+        }
+        
+        for(int x=p+1;x<=p2;x++){
+            for(int y=q2;y<=q2;y++){
+                if(realgrid[x][y].equals(" ")){
+                    realgrid[x][y]="o";
+                    count++;
+                }
+            }
+        }
+  
+        return count;
+        
+    }
+    public static int downRight(int p,int q,int p2,int q2,String realgrid[][]){
+        int count=0;
+        
+        for(int x=p;x<=p2;x++){
+            for(int y=q;y<=q;y++){
+                if(realgrid[x][y].equals(" ")){
+                    realgrid[x][y]="o";
+                    count++;
+                }
+            }
+        }
+        
+        for(int x=p2;x<=p2;x++){
+            for(int y=q+1;y<=q2;y++){
+                if(realgrid[x][y].equals(" ")){
+                    realgrid[x][y]="o";
+                    count++;
+                }
+            }
+        }
+      
+        return count;
+    }
+    
+    public static int downLeft(int p,int q,int p2,int q2,String realgrid[][]){
+        int count=0;
+        
+        for(int x=p;x<=p2;x++){
+            for(int y=q;y<=q;y++){
+                if(realgrid[x][y].equals(" ")){
+                    realgrid[x][y]="o";
+                    count++;
+                }
+            }
+        }
+        
+        for(int x=p2;x<=p2;x++){
+            for(int y=q-1;y>=q2;y--){
+                if(realgrid[x][y].equals(" ")){
+                    realgrid[x][y]="o";
+                    count++;
+                }
+            }
+        }
+        
+   
+        return count;
+    }
+    
+}
